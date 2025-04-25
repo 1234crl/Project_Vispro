@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BudgetingManagement" Class="BudgetingManagementDBMLDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-LSQ6OSO\SQLEXPRESS;Initial Catalog=BudgetingManagement;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Project_Vispro.Properties.Settings" SettingsPropertyName="BudgetingManagementConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Budget" Member="Budgets">
+    <Type Name="Budget">
+      <Column Name="budget_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Budget_DetailBudget" Member="DetailBudgets" ThisKey="budget_id" OtherKey="budget_id" Type="DetailBudget" />
+      <Association Name="Budget_Expense" Member="Expenses" ThisKey="budget_id" OtherKey="budget_id" Type="Expense" />
+      <Association Name="User_Budget" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CategoryExpenses" Member="CategoryExpenses">
+    <Type Name="CategoryExpense">
+      <Column Name="categoryExpense_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="categoryExpense_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="CategoryExpense_DetailBudget" Member="DetailBudgets" ThisKey="categoryExpense_id" OtherKey="categoryExpense_id" Type="DetailBudget" />
+      <Association Name="CategoryExpense_Expense" Member="Expenses" ThisKey="categoryExpense_id" OtherKey="categoryExpense_id" Type="Expense" />
+      <Association Name="User_CategoryExpense" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CategoryIncomes" Member="CategoryIncomes">
+    <Type Name="CategoryIncome">
+      <Column Name="categoryIncome_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="categoryIncome_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CategoryIncome_Income" Member="Incomes" ThisKey="categoryIncome_id" OtherKey="categoryIncome_id" Type="Income" />
+      <Association Name="User_CategoryIncome" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CategoryPeople" Member="CategoryPeoples">
+    <Type Name="CategoryPeople">
+      <Column Name="people_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="people_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CategoryPeople_DetailPigether" Member="DetailPigethers" ThisKey="people_id" OtherKey="categoryPeople_id" Type="DetailPigether" />
+      <Association Name="User_CategoryPeople" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailBudget" Member="DetailBudgets">
+    <Type Name="DetailBudget">
+      <Column Name="detailBudget_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="budget_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="categoryExpense_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="month" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Budget_DetailBudget" Member="Budget" ThisKey="budget_id" OtherKey="budget_id" Type="Budget" IsForeignKey="true" />
+      <Association Name="CategoryExpense_DetailBudget" Member="CategoryExpense" ThisKey="categoryExpense_id" OtherKey="categoryExpense_id" Type="CategoryExpense" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailExpenses" Member="DetailExpenses">
+    <Type Name="DetailExpense">
+      <Column Name="expense_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="detailExpense_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="addedDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Expense_DetailExpense" Member="Expense" ThisKey="expense_id" OtherKey="expense_id" Type="Expense" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailIncome" Member="DetailIncomes">
+    <Type Name="DetailIncome">
+      <Column Name="detailIncome_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="income_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="addedDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Income_DetailIncome" Member="Income" ThisKey="income_id" OtherKey="income_id" Type="Income" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailPigether" Member="DetailPigethers">
+    <Type Name="DetailPigether">
+      <Column Name="detailPigether_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pigether_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="categoryPeople_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="amount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="CategoryPeople_DetailPigether" Member="CategoryPeople" ThisKey="categoryPeople_id" OtherKey="people_id" Type="CategoryPeople" IsForeignKey="true" />
+      <Association Name="Pigether_DetailPigether" Member="Pigether" ThisKey="pigether_id" OtherKey="pigether_id" Type="Pigether" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Expenses" Member="Expenses">
+    <Type Name="Expense">
+      <Column Name="expense_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="budget_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="categoryExpense_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Expense_DetailExpense" Member="DetailExpenses" ThisKey="expense_id" OtherKey="expense_id" Type="DetailExpense" />
+      <Association Name="Budget_Expense" Member="Budget" ThisKey="budget_id" OtherKey="budget_id" Type="Budget" IsForeignKey="true" />
+      <Association Name="CategoryExpense_Expense" Member="CategoryExpense" ThisKey="categoryExpense_id" OtherKey="categoryExpense_id" Type="CategoryExpense" IsForeignKey="true" />
+      <Association Name="User_Expense" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Income" Member="Incomes">
+    <Type Name="Income">
+      <Column Name="income_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="categoryIncome_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Income_DetailIncome" Member="DetailIncomes" ThisKey="income_id" OtherKey="income_id" Type="DetailIncome" />
+      <Association Name="CategoryIncome_Income" Member="CategoryIncome" ThisKey="categoryIncome_id" OtherKey="categoryIncome_id" Type="CategoryIncome" IsForeignKey="true" />
+      <Association Name="User_Income" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pigether" Member="Pigethers">
+    <Type Name="Pigether">
+      <Column Name="pigether_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pigether_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="goal" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Pigether_DetailPigether" Member="DetailPigethers" ThisKey="pigether_id" OtherKey="pigether_id" Type="DetailPigether" />
+      <Association Name="User_Pigether" Member="User" ThisKey="user_id" OtherKey="user_id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="phone_number" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="balances" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="savings" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="User_Budget" Member="Budgets" ThisKey="user_id" OtherKey="user_id" Type="Budget" />
+      <Association Name="User_CategoryExpense" Member="CategoryExpenses" ThisKey="user_id" OtherKey="user_id" Type="CategoryExpense" />
+      <Association Name="User_CategoryIncome" Member="CategoryIncomes" ThisKey="user_id" OtherKey="user_id" Type="CategoryIncome" />
+      <Association Name="User_CategoryPeople" Member="CategoryPeoples" ThisKey="user_id" OtherKey="user_id" Type="CategoryPeople" />
+      <Association Name="User_Expense" Member="Expenses" ThisKey="user_id" OtherKey="user_id" Type="Expense" />
+      <Association Name="User_Income" Member="Incomes" ThisKey="user_id" OtherKey="user_id" Type="Income" />
+      <Association Name="User_Pigether" Member="Pigethers" ThisKey="user_id" OtherKey="user_id" Type="Pigether" />
+    </Type>
+  </Table>
+  <Table Name="dbo.viewExpenseBudget" Member="viewExpenseBudgets">
+    <Type Name="viewExpenseBudget">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Expense Category]" Member="Expense_Category" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Budget" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="Expenses" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.viewAllExpense" Member="viewAllExpenses">
+    <Type Name="viewAllExpense">
+      <Column Name="[ID User]" Member="ID_User" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Expenses" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="[Added Date]" Member="Added_Date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.viewAllEarning" Member="viewAllEarnings">
+    <Type Name="viewAllEarning">
+      <Column Name="[ID User]" Member="ID_User" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Earnings" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="[Added Date]" Member="Added_Date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.viewDetailPigether" Member="viewDetailPigethers">
+    <Type Name="viewDetailPigether">
+      <Column Name="[Pigether ID]" Member="Pigether_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="People" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
